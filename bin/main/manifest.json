@@ -1,0 +1,19 @@
+{
+    "Group": "com.airijko",
+    "Name": "EndlessLevelingAddon",
+    "Version": "1.0.0",
+    "Description": "Description of your plugin",
+    "Authors": [
+        {
+            "Name": "Airijko"
+        }
+    ],
+    "DisabledByDefault": false,
+    "IncludesAssetPack": true,
+    "Dependencies": {
+        "com.airijko:endlessleveling": ">=6.1"
+    },
+    "OptionalDependencies": {},
+    "ServerVersion": "*",
+    "Main": "com.airijko.endlessleveling.EndlessLevelingAddon"
+}
