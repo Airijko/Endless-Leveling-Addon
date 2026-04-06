@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.example'
+version = '1.0.0'
+description = 'EndlessLevelingTemplate'
+
+def hytaleInstallPath = providers.gradleProperty('hytaleInstallPath')
+        .orElse("${System.getenv('APPDATA')}/Hytale/install/release/package/game/latest")
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Compile against the local server API without bundling it into the addon jar.
+    compileOnly files("${hytaleInstallPath.get()}/Server/HytaleServer.jar")
+    // Compile against Endless Leveling classes from the sibling project's build output.
+    compileOnly files('../endlessleveling/build/classes/java/main')
+    // JSON parsing via Gson (bundled by Endless Leveling at runtime).
+    compileOnly 'com.google.code.gson:gson:2.10.1'
+}
+
+// Compatibility alias so ./gradlew package behaves like traditional packaging workflows.
+tasks.register('package') {
+    group = 'build'
+    description = 'Builds the project and produces distributable artifacts.'
+    dependsOn tasks.named('build')
+}

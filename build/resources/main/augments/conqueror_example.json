@@ -1,0 +1,41 @@
+{
+    "id": "conqueror_example",
+    "name": "Conqueror Example",
+    "tier": "MYTHIC",
+    "category": "ON_HIT",
+    "stackable": false,
+    "enabled": false,
+    "description": "Each consecutive hit increases your damage. At max stacks, deal bonus true damage.",
+    "ui": {
+        "sections": [
+            {
+                "title": "Buffs",
+                "body": "+5% damage per stack (max 8 stacks)\nAt max stacks: +50 true damage + 3% of base as true damage",
+                "color": "#8adf9e"
+            },
+            {
+                "title": "Duration",
+                "body": "8s per stack",
+                "color": "#9ecbff"
+            }
+        ]
+    },
+    "passives": {
+        "buffs": {
+            "bonus_damage": {
+                "value": 5
+            },
+            "max_stacks": 8
+        },
+        "max_stack_bonus": {
+            "bonus_true_damage": {
+                "value": 50,
+                "true_damage_percent": 3
+            }
+        },
+        "duration": {
+            "seconds": 8
+        }
+    },
+    "mob_compatible": false
+}

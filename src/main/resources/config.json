@@ -1,0 +1,16 @@
+{
+    "core_content_merge": {
+        "races": true,
+        "classes": true,
+        "augments": true,
+        "passives": true
+    },
+    "examples": {
+        "races": true,
+        "classes": true,
+        "augments": true,
+        "passives": true,
+        "command": false,
+        "events": false
+    }
+}

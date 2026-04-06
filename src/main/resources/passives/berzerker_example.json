@@ -1,0 +1,8 @@
+{
+    "passive": {
+        "type": "BERSERKER",
+        "enabled": false,
+        "value": 0.2,
+        "threshold": 0.35
+    }
+}
