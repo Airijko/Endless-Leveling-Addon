@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
-import com.hypixel.hytale.server.core.plugin.PluginManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +31,6 @@ import java.util.stream.Stream;
  */
 public final class AddonFilesManager {
 
-    private static final String PLUGIN_FOLDER_NAME = "EndlessLevelingTemplate";
     private static final DateTimeFormatter ARCHIVE_TIMESTAMP_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
     private static final Pattern MANIFEST_VERSION_PATTERN = Pattern.compile("\"Version\"\\s*:\\s*\"([^\"]+)\"");
     private static final Type STRING_OBJECT_MAP_TYPE = new TypeToken<Map<String, Object>>() {}.getType();
@@ -51,10 +49,13 @@ public final class AddonFilesManager {
     private AddonContentOptions contentOptions;
     private Path currentArchiveSession;
 
-    public AddonFilesManager(JavaPlugin plugin) {
+    public AddonFilesManager(JavaPlugin plugin, Path dataDirectory) {
         this.plugin = plugin;
+        if (dataDirectory == null) {
+            throw new IllegalStateException("dataDirectory is required for AddonFilesManager");
+        }
 
-        this.pluginFolder = PluginManager.MODS_PATH.resolve(PLUGIN_FOLDER_NAME).toFile();
+        this.pluginFolder = dataDirectory.toFile();
         this.racesFolder = new File(pluginFolder, "races");
         this.classesFolder = new File(pluginFolder, "classes");
         this.augmentsFolder = new File(pluginFolder, "augments");

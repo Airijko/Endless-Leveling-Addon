@@ -1,7 +1,7 @@
 {
-    "Group": "com.airijko",
+    "Group": "Airijko",
     "Name": "EndlessLevelingTemplate",
-    "Version": "1.1.0",
+    "Version": "1.2.0",
     "Description": "Template addon for Endless Leveling — classes, races, augments, and passives",
     "Authors": [
         {
@@ -11,7 +11,7 @@
     "DisabledByDefault": false,
     "IncludesAssetPack": false,
     "Dependencies": {
-        "com.airijko:EndlessLeveling": ">=8.0.0"
+        "Airijko:EndlessLevelingCore": ">=8.0.0"
     },
     "OptionalDependencies": {},
     "ServerVersion": "2026.03.26-89796e57b",

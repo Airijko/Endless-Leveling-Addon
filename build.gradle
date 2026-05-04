@@ -3,7 +3,8 @@ plugins {
 }
 
 group = 'com.example'
-version = '1.1.0'
+// Single source of truth: read version from manifest.json so we only bump in one place.
+version = new groovy.json.JsonSlurper().parse(file('src/main/resources/manifest.json')).Version
 description = 'EndlessLevelingTemplate'
 
 def hytaleInstallPath = providers.gradleProperty('hytaleInstallPath')
@@ -28,3 +29,11 @@ tasks.register('package') {
     description = 'Builds the project and produces distributable artifacts.'
     dependsOn tasks.named('build')
 }
+
+// Centralized output: also copy produced jars into ../00_EndlessBuildOutputJars
+tasks.register('copyToEndlessJars', Copy) {
+    dependsOn tasks.withType(Jar)
+    from { tasks.withType(Jar).findAll { it.enabled }.collect { it.archiveFile } }
+    into file("${projectDir}/../00_EndlessBuildOutputJars")
+}
+tasks.named('build') { finalizedBy 'copyToEndlessJars' }

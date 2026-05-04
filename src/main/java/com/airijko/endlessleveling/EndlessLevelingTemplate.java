@@ -24,7 +24,7 @@ public class EndlessLevelingTemplate extends JavaPlugin {
 
     @Override
     protected void setup() {
-        this.filesManager = new AddonFilesManager(this);
+        this.filesManager = new AddonFilesManager(this, getDataDirectory());
 
         if (this.filesManager.shouldMergeRacesWithCore()) {
             RaceRegistration.registerAll(this.filesManager.getRacesFolder(),
