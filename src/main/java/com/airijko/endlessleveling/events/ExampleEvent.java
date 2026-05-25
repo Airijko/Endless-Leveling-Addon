@@ -13,6 +13,6 @@ public class ExampleEvent {
         }
 
         Player player = event.getPlayer();
-        player.sendMessage(Message.raw("Welcome " + player.getDisplayName()));
+        player.getPlayerRef().sendMessage(Message.raw("Welcome " + player.getPlayerRef().getUsername()));
     }
 }
