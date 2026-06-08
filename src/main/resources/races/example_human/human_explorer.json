@@ -28,13 +28,14 @@
   },
   "attributes": {
     "life_force": 127.4,
-    "strength": 0.89,
-    "defense": 0.91,
-    "haste": 1.05,
-    "precision": 8.4,
-    "ferocity": 42.0,
+    "strength": 59.85,
+    "defense": 34.4,
+    "haste": 110.0,
+    "precision": 7.2,
+    "ferocity": 16.8,
     "stamina": 8.4,
     "flow": 16.8,
+    "sorcery": 10.5,
     "discipline": 0.0
   },
   "passives": [
@@ -56,6 +57,7 @@
     {
       "type": "INNATE_ATTRIBUTE_GAIN",
       "attribute": "life_force",
+      "stat_type": "basestat",
       "value": 1.8
     }
   ]

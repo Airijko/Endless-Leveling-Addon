@@ -46,11 +46,13 @@
     {
       "type": "INNATE_ATTRIBUTE_GAIN",
       "attribute": "strength",
-      "value": 0.65
+      "stat_type": "basestat",
+      "value": 0.6
     },
     {
       "type": "INNATE_ATTRIBUTE_GAIN",
       "attribute": "stamina",
+      "stat_type": "basestat",
       "value": 0.91
     }
   ],
