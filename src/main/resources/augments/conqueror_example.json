@@ -2,20 +2,28 @@
     "id": "conqueror_example",
     "name": "Conqueror Example",
     "tier": "MYTHIC",
-    "category": "ON_HIT",
+    "hook": "ON_HIT",
+    "icon": "Ingredient_Void_Essence",
     "stackable": false,
     "enabled": false,
     "description": "Each consecutive hit increases your damage. At max stacks, deal bonus true damage.",
     "ui": {
+        "vars": {
+            "perStack":  { "path": "passives.buffs.bonus_damage.value",                          "fmt": "int" },
+            "maxStacks": { "path": "passives.buffs.max_stacks",                                   "fmt": "int" },
+            "flatTrue":  { "path": "passives.max_stack_bonus.bonus_true_damage.value",            "fmt": "int" },
+            "pctTrue":   { "path": "passives.max_stack_bonus.bonus_true_damage.true_damage_percent", "fmt": "int" },
+            "seconds":   { "path": "passives.duration.seconds",                                   "fmt": "int" }
+        },
         "sections": [
             {
                 "title": "Buffs",
-                "body": "+5% damage per stack (max 8 stacks)\nAt max stacks: +50 true damage + 3% of base as true damage",
+                "body": "+{perStack}% damage per stack (max {maxStacks} stacks)\nAt max stacks: +{flatTrue} true damage + {pctTrue}% of base as true damage",
                 "color": "#8adf9e"
             },
             {
                 "title": "Duration",
-                "body": "8s per stack",
+                "body": "{seconds}s per stack",
                 "color": "#9ecbff"
             }
         ]

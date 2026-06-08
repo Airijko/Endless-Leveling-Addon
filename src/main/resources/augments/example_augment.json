@@ -2,15 +2,19 @@
     "id": "example_augment",
     "name": "Example Augment",
     "tier": "COMMON",
-    "category": "PASSIVE_STAT",
+    "hook": "PASSIVE_STAT",
+    "icon": "Ingredient_Life_Essence",
     "stackable": true,
     "enabled": false,
     "description": "Small raw boosts to your core stats.",
     "ui": {
+        "vars": {
+            "strPct": { "path": "passives.buffs.strength.value", "fmt": "pct0" }
+        },
         "sections": [
             {
                 "title": "Buffs",
-                "body": "+5% Strength",
+                "body": "+{strPct} Strength",
                 "color": "#8adf9e"
             }
         ]

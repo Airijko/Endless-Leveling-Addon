@@ -3,6 +3,7 @@ package com.airijko.endlessleveling.registration.augments;
 import com.airijko.endlessleveling.api.EndlessLevelingAPI;
 import com.airijko.endlessleveling.augments.Augment;
 import com.airijko.endlessleveling.augments.AugmentDefinition;
+import com.airijko.endlessleveling.augments.AugmentVarResolver;
 import com.airijko.endlessleveling.enums.PassiveCategory;
 import com.airijko.endlessleveling.enums.PassiveTier;
 import com.airijko.endlessleveling.managers.ExampleFeatureManager;
@@ -130,9 +131,16 @@ public final class AugmentRegistration {
         String name = stringVal(root.get("name"), id);
         String description = stringVal(root.get("description"), "");
         PassiveTier tier = PassiveTier.fromConfig(root.get("tier"), PassiveTier.COMMON);
-        PassiveCategory category = PassiveCategory.fromConfig(root.get("category"), null);
+        // 'hook' is the canonical key in current EL Core; 'category' is kept as a legacy alias.
+        Object hookNode = root.get("hook");
+        if (hookNode == null) {
+            hookNode = root.get("category");
+        }
+        PassiveCategory category = PassiveCategory.fromConfig(hookNode, null);
         boolean stackable = booleanVal(root.get("stackable"), false);
-        boolean mobCompatible = booleanVal(root.get("mob_compatible"), false);
+        // Mirror EL Core: augments are mob-compatible by default unless explicitly disabled.
+        boolean mobCompatible = booleanVal(root.get("mob_compatible"), true);
+        String icon = stringVal(root.get("icon"), null);
 
         Object passivesNode = root.getOrDefault("passives", Collections.emptyMap());
         Map<String, Object> passives = passivesNode instanceof Map<?, ?> m
@@ -140,7 +148,42 @@ public final class AugmentRegistration {
                 : Collections.emptyMap();
 
         List<AugmentDefinition.UiSection> uiSections = parseUiSections(root);
-        return new AugmentDefinition(id, name, tier, category, stackable, description, passives, uiSections, mobCompatible);
+        List<AugmentVarResolver.UiVarSpec> uiVars = parseUiVars(root);
+        return new AugmentDefinition(id, name, tier, category, stackable, description,
+                passives, uiSections, uiVars, root, mobCompatible, icon);
+    }
+
+    /**
+     * Parses the {@code ui.vars} block into {@link AugmentVarResolver.UiVarSpec}s so section
+     * bodies can use {@code {placeholder}} substitution backed by {@code path}/{@code expr}
+     * lookups — matching EL Core's augment UI format.
+     */
+    @SuppressWarnings("unchecked")
+    private static List<AugmentVarResolver.UiVarSpec> parseUiVars(Map<String, Object> root) {
+        List<AugmentVarResolver.UiVarSpec> out = new ArrayList<>();
+        Object uiNode = root.get("ui");
+        if (!(uiNode instanceof Map<?, ?> uiRaw)) {
+            return out;
+        }
+        Object varsNode = ((Map<String, Object>) uiRaw).get("vars");
+        if (!(varsNode instanceof Map<?, ?> varsMap)) {
+            return out;
+        }
+        for (Map.Entry<?, ?> entry : varsMap.entrySet()) {
+            if (!(entry.getKey() instanceof String name) || !(entry.getValue() instanceof Map<?, ?> specRaw)) {
+                continue;
+            }
+            Map<String, Object> spec = (Map<String, Object>) specRaw;
+            String path = stringVal(spec.get("path"), "");
+            String expr = stringVal(spec.get("expr"), "");
+            String fmtStr = stringVal(spec.get("fmt"), "int");
+            AugmentVarResolver.FormatSpec fmt = AugmentVarResolver.FormatSpec.parse(fmtStr);
+            out.add(new AugmentVarResolver.UiVarSpec(name,
+                    path.isBlank() ? null : path,
+                    expr.isBlank() ? null : expr,
+                    fmt));
+        }
+        return out;
     }
 
     @SuppressWarnings("unchecked")
