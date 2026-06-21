@@ -13,6 +13,10 @@ public class ExampleEvent {
         }
 
         Player player = event.getPlayer();
+        if (player == null
+                || com.airijko.endlessleveling.util.WorldContextUtil.isEndlessDisabled(player.getWorld())) {
+            return;
+        }
         player.getPlayerRef().sendMessage(Message.raw("Welcome " + player.getPlayerRef().getUsername()));
     }
 }
