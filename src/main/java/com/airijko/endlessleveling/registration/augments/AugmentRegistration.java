@@ -138,8 +138,6 @@ public final class AugmentRegistration {
         }
         PassiveCategory category = PassiveCategory.fromConfig(hookNode, null);
         boolean stackable = booleanVal(root.get("stackable"), false);
-        // Mirror EL Core: augments are mob-compatible by default unless explicitly disabled.
-        boolean mobCompatible = booleanVal(root.get("mob_compatible"), true);
         String icon = stringVal(root.get("icon"), null);
 
         Object passivesNode = root.getOrDefault("passives", Collections.emptyMap());
@@ -150,7 +148,7 @@ public final class AugmentRegistration {
         List<AugmentDefinition.UiSection> uiSections = parseUiSections(root);
         List<AugmentVarResolver.UiVarSpec> uiVars = parseUiVars(root);
         return new AugmentDefinition(id, name, tier, category, stackable, description,
-                passives, uiSections, uiVars, root, mobCompatible, icon);
+                passives, uiSections, uiVars, root, icon);
     }
 
     /**
