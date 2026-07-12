@@ -31,9 +31,15 @@ tasks.register('package') {
 }
 
 // Centralized output: also copy produced jars into ../00_EndlessBuildOutputJars
-tasks.register('copyToEndlessJars', Copy) {
+// Untyped on purpose: a typed Copy task declares the shared jar-drop folder as its
+// output, so Gradle fingerprints everything in it on every build (it held 9 GB once).
+tasks.register('copyToEndlessJars') {
     dependsOn tasks.withType(Jar)
-    from { tasks.withType(Jar).findAll { it.enabled }.collect { it.archiveFile } }
-    into file("${projectDir}/../00_EndlessBuildOutputJars")
+    doLast {
+        copy {
+            from tasks.withType(Jar).findAll { it.enabled }.collect { it.archiveFile }
+            into file("${projectDir}/../00_EndlessBuildOutputJars")
+        }
+    }
 }
 tasks.named('build') { finalizedBy 'copyToEndlessJars' }
