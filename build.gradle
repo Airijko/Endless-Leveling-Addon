@@ -7,8 +7,25 @@ group = 'com.example'
 version = new groovy.json.JsonSlurper().parse(file('src/main/resources/manifest.json')).Version
 description = 'EndlessLevelingTemplate'
 
-def hytaleInstallPath = providers.gradleProperty('hytaleInstallPath')
-        .orElse("${System.getenv('APPDATA')}/Hytale/install/release/package/game/latest")
+// Update 6: the install is selected by -Ppatchline (default pre-release). The old
+// `hytaleInstallPath` property is deliberately NOT consulted here: a machine-wide value in
+// ~/.gradle/gradle.properties silently pinned every local build to the 0.5.9 release jar,
+// which compiles clean and then fails at runtime on the new protocol.
+def patchline = providers.gradleProperty('patchline').orElse('pre-release').get()
+def hytaleHome = {
+    def userHome = System.getProperty('user.home')
+    def osName = System.getProperty('os.name').toLowerCase()
+    if (osName.contains('win')) {
+        def appData = System.getenv('APPDATA') ?: "${userHome}/AppData/Roaming"
+        return "${appData}/Hytale"
+    }
+    if (osName.contains('mac')) {
+        return "${userHome}/Library/Application Support/Hytale"
+    }
+    def flatpak = "${userHome}/.var/app/com.hypixel.HytaleLauncher/data/Hytale"
+    return new File(flatpak).exists() ? flatpak : "${userHome}/.local/share/Hytale"
+}()
+def hytaleInstallPath = providers.provider { "${hytaleHome}/install/${patchline}/package/game/latest" }
 
 repositories {
     mavenCentral()
