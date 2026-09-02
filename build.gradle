@@ -35,7 +35,14 @@ dependencies {
     // Compile against the local server API without bundling it into the addon jar.
     compileOnly files("${hytaleInstallPath.get()}/Server/HytaleServer.jar")
     // Compile against Endless Leveling classes from the sibling project's build output.
-    compileOnly files('../endlessleveling/build/classes/java/main')
+    // Two candidate directory names are accepted: 'endlessleveling' is the symlink the
+    // partner/template layout uses, and 'Endless-Leveling-Core' is the real directory name in
+    // the Endless workspace. Gradle's files() silently drops entries that do not exist, so
+    // listing both resolves in either layout instead of depending on an untracked symlink
+    // being present (its absence produces ~100 bogus "package does not exist" errors).
+    compileOnly files(
+            '../endlessleveling/build/classes/java/main',
+            '../Endless-Leveling-Core/build/classes/java/main')
     // JSON parsing via Gson (bundled by Endless Leveling at runtime).
     compileOnly 'com.google.code.gson:gson:2.10.1'
 }
