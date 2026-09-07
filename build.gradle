@@ -60,9 +60,17 @@ tasks.register('package') {
 tasks.register('copyToEndlessJars') {
     dependsOn tasks.withType(Jar)
     doLast {
+        // The drop zone is ONE jar per mod: the server loads every jar in it, so a build that
+        // leaves the previous version behind gets both loaded and the older classes can win.
+        // Prune our own older jars before staging (never touch any other mod's).
+        def dropZone = file("${projectDir}/../00_EndlessBuildOutputJars")
+        def staged = tasks.withType(Jar).findAll { it.enabled }.collect { it.archiveFile.get().asFile }
+        def keep = staged.collect { it.name } as Set
+        dropZone.listFiles({ f -> f.name ==~ /EndlessLevelingTemplate-.*\.jar/ && !keep.contains(f.name) } as FileFilter)
+                ?.each { it.delete() }
         copy {
-            from tasks.withType(Jar).findAll { it.enabled }.collect { it.archiveFile }
-            into file("${projectDir}/../00_EndlessBuildOutputJars")
+            from staged
+            into dropZone
         }
     }
 }
