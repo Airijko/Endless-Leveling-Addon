@@ -26,14 +26,22 @@ def hytaleHome = {
     return new File(flatpak).exists() ? flatpak : "${userHome}/.local/share/Hytale"
 }()
 def hytaleInstallPath = providers.provider { "${hytaleHome}/install/${patchline}/package/game/latest" }
+// Match the engine API used by Core. CI must not silently compile against a stale launcher jar.
+boolean ci = System.getenv('CI') == 'true'
+def serverJarOverride = providers.gradleProperty('hytaleServerJar')
+def hytaleServer = serverJarOverride.isPresent() ? files(serverJarOverride.get())
+        : ci ? 'com.hypixel.hytale:Server:0.7.0-pre.5.1'
+        : files("${hytaleInstallPath.get()}/Server/HytaleServer.jar")
 
 repositories {
     mavenCentral()
+    maven { url = 'https://maven.hytale.com/release' }
+    maven { url = 'https://maven.hytale.com/pre-release' }
 }
 
 dependencies {
     // Compile against the local server API without bundling it into the addon jar.
-    compileOnly files("${hytaleInstallPath.get()}/Server/HytaleServer.jar")
+    compileOnly hytaleServer
     // Compile against Endless Leveling classes from the sibling project's build output.
     // Two candidate directory names are accepted: 'endlessleveling' is the symlink the
     // partner/template layout uses, and 'Endless-Leveling-Core' is the real directory name in
