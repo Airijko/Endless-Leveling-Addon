@@ -83,3 +83,11 @@ tasks.register('copyToEndlessJars') {
     }
 }
 tasks.named('build') { finalizedBy 'copyToEndlessJars' }
+
+// endless-license:begin (written by tools/hytale-kit/license_files.py, do not edit by hand)
+// Ships the repo-root license files at the jar root, so the terms travel with the jar.
+processResources {
+    from(rootProject.file('LICENSE')) { rename { 'LICENSE.txt' } }
+    from(rootProject.file('NOTICE.txt'))
+}
+// endless-license:end
