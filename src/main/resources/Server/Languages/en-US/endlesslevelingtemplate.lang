@@ -1,0 +1,4 @@
+cmd.example.desc = An example command
+msg.example.disabled = Example command is disabled.
+msg.example.hello = Hello from EndlessLevelingTemplate!
+msg.welcome = Welcome {name}

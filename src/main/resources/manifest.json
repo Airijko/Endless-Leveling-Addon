@@ -9,7 +9,7 @@
         }
     ],
     "DisabledByDefault": false,
-    "IncludesAssetPack": false,
+    "IncludesAssetPack": true,
     "Dependencies": {
         "Airijko:EndlessLevelingCore": ">=8.0.0"
     },

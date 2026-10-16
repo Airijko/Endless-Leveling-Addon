@@ -19,11 +19,11 @@ public class ExampleCommand extends AbstractCommand {
     @Override
     protected CompletableFuture<Void> execute(@Nonnull CommandContext context) {
         if (!ExampleFeatureManager.get().isExampleCommandEnabled()) {
-            context.sendMessage(Message.raw("Example command is disabled."));
+            context.sendMessage(Message.translation("endlesslevelingtemplate.msg.example.disabled"));
             return CompletableFuture.completedFuture(null);
         }
 
-        context.sendMessage(Message.raw("Hello from EndlessLevelingTemplate!"));
+        context.sendMessage(Message.translation("endlesslevelingtemplate.msg.example.hello"));
         return CompletableFuture.completedFuture(null);
     }
 }

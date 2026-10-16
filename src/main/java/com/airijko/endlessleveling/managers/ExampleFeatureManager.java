@@ -59,7 +59,7 @@ public final class ExampleFeatureManager {
 
     public void registerExamples(JavaPlugin plugin) {
         if (isExampleCommandEnabled()) {
-            plugin.getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
+            plugin.getCommandRegistry().registerCommand(new ExampleCommand("example", "endlesslevelingtemplate.cmd.example.desc"));
             LOGGER.atInfo().log("Example command enabled.");
         }
 

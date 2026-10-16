@@ -17,6 +17,6 @@ public class ExampleEvent {
                 || com.airijko.endlessleveling.util.WorldContextUtil.isEndlessDisabled(player.getWorld())) {
             return;
         }
-        player.getPlayerRef().sendMessage(Message.raw("Welcome " + player.getPlayerRef().getUsername()));
+        player.getPlayerRef().sendMessage(Message.translation("endlesslevelingtemplate.msg.welcome").param("name", player.getPlayerRef().getUsername()));
     }
 }
