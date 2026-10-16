@@ -1,0 +1,8 @@
+
+# translated 2026-10-15
+msg.example.disabled = Disabled ang example command.
+
+# translated 2026-10-15
+cmd.example.desc = Isang halimbawang command
+msg.example.hello = Hello mula sa EndlessLevelingTemplate!
+msg.welcome = Maligayang pagdating, {name}

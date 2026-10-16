@@ -1,0 +1,8 @@
+
+# translated 2026-10-15
+msg.example.disabled = Örnek komut devre dışı.
+
+# translated 2026-10-15
+cmd.example.desc = Örnek bir komut
+msg.example.hello = EndlessLevelingTemplate'ten merhaba!
+msg.welcome = Hoş geldin {name}

@@ -1,0 +1,8 @@
+
+# translated 2026-10-15
+msg.example.disabled = Примерная команда отключена.
+
+# translated 2026-10-15
+cmd.example.desc = Пример команды
+msg.example.hello = Привет от EndlessLevelingTemplate!
+msg.welcome = Добро пожаловать, {name}

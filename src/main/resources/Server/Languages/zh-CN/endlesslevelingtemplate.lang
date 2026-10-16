@@ -1,0 +1,6 @@
+
+# translated 2026-10-15
+cmd.example.desc = 一个示例命令
+msg.example.disabled = 示例命令已禁用。
+msg.example.hello = 来自 EndlessLevelingTemplate 的问候！
+msg.welcome = 欢迎 {name}

@@ -1,0 +1,6 @@
+
+# translated 2026-10-15
+cmd.example.desc = Un comando de ejemplo
+msg.example.disabled = El comando de ejemplo está desactivado.
+msg.example.hello = ¡Hola desde EndlessLevelingTemplate!
+msg.welcome = Bienvenido, {name}

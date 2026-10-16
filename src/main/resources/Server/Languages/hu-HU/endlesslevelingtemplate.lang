@@ -1,0 +1,6 @@
+
+# translated 2026-10-15
+cmd.example.desc = Egy példa parancs
+msg.example.disabled = A példa parancs le van tiltva.
+msg.example.hello = Üdv az EndlessLevelingTemplate-ből!
+msg.welcome = Üdv {name}
